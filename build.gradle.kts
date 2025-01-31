@@ -1,4 +1,4 @@
-group = "com.example" // TODO: Change this to your group
+group = "fr.ateastudio.disease"
 version = "1.0-SNAPSHOT" // TODO: Change this to your addon version
 
 plugins {
@@ -18,10 +18,15 @@ dependencies {
     implementation(libs.nova)
 }
 
+
 addon {
-    name = project.name.replaceFirstChar(Char::uppercase)
+    name = "Disease"
     version = project.version.toString()
-    main = "com.example.ExampleAddon" // TODO: Change this to your main class
+    main = "fr.ateastudio.disease.Disease"
+    authors = listOf("Katalijst")
+    description = "Disease Server Addon"
+    website = "https://atea-studio.fr/nova-addons"
+    prefix = "Disease"
     
     // output directory for the generated addon jar is read from the "outDir" project property (-PoutDir="...")
     val outDir = project.findProperty("outDir")
