@@ -1,17 +1,118 @@
-<svg width="600" height="200" xmlns="http://www.w3.org/2000/svg">
-  <!-- Define a filter for a subtle dripping (distortion) effect -->
+<svg width="600" height="300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Define a filter for a subtle dripping effect -->
   <defs>
     <filter id="drip">
       <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" result="turbulence"/>
       <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="5" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
   </defs>
-  
+
   <!-- Background -->
-  <rect width="600" height="200" fill="#111" />
-  
+  <rect width="400" height="100" fill="#111"/>
+
+  <!-- Pixel Art Skull – 11x11 grid (each cell is 6x6 pixels) -->
+  <g id="pixel-skull" transform="translate(15,15)">
+    <!-- Row 0 -->
+    <rect x="24" y="0" width="6" height="6" fill="#e00"/>
+    <rect x="30" y="0" width="6" height="6" fill="#e00"/>
+    <rect x="36" y="0" width="6" height="6" fill="#e00"/>
+
+    <!-- Row 1 -->
+    <rect x="12" y="6" width="6" height="6" fill="#e00"/>
+    <rect x="18" y="6" width="6" height="6" fill="#e00"/>
+    <rect x="42" y="6" width="6" height="6" fill="#e00"/>
+    <rect x="48" y="6" width="6" height="6" fill="#e00"/>
+
+    <rect x="30" y="6" width="6" height="6" fill="#600"/>
+    <rect x="36" y="6" width="6" height="6" fill="#600"/>
+
+    <!-- Row 2 -->
+    <rect x="6" y="12" width="6" height="6" fill="#e00"/>
+    <rect x="54" y="12" width="6" height="6" fill="#e00"/>
+
+    <rect x="36" y="12" width="6" height="6" fill="#600"/>
+    <rect x="42" y="12" width="6" height="6" fill="#600"/>
+    <rect x="48" y="12" width="6" height="6" fill="#600"/>
+
+    <!-- Row 3 -->
+    <rect x="6" y="18" width="6" height="6" fill="#e00"/>
+    <rect x="54" y="18" width="6" height="6" fill="#e00"/>
+
+    <rect x="48" y="18" width="6" height="6" fill="#600"/>
+
+    <!-- Row 4 -->
+    <rect x="0" y="24" width="6" height="6" fill="#e00"/>
+    <rect x="18" y="24" width="6" height="6" fill="#e00"/>
+    <rect x="24" y="24" width="6" height="6" fill="#e00"/>
+    <rect x="36" y="24" width="6" height="6" fill="#e00"/>
+    <rect x="42" y="24" width="6" height="6" fill="#e00"/>
+    <rect x="60" y="24" width="6" height="6" fill="#e00"/>
+
+    <rect x="48" y="24" width="6" height="6" fill="#600"/>
+    <rect x="54" y="24" width="6" height="6" fill="#600"/>
+
+    <!-- Row 5 -->
+    <rect x="0" y="30" width="6" height="6" fill="#e00"/>
+    <rect x="12" y="30" width="6" height="6" fill="#e00"/>
+    <rect x="18" y="30" width="6" height="6" fill="#e00"/>
+    <rect x="24" y="30" width="6" height="6" fill="#e00"/>
+    <rect x="36" y="30" width="6" height="6" fill="#e00"/>
+    <rect x="42" y="30" width="6" height="6" fill="#e00"/>
+    <rect x="48" y="30" width="6" height="6" fill="#e00"/>
+    <rect x="60" y="30" width="6" height="6" fill="#e00"/>
+
+    <rect x="54" y="30" width="6" height="6" fill="#600"/>
+
+    <!-- Row 6 -->
+    <rect x="0" y="36" width="6" height="6" fill="#e00"/>
+    <rect x="12" y="36" width="6" height="6" fill="#e00"/>
+    <rect x="18" y="36" width="6" height="6" fill="#e00"/>
+    <rect x="24" y="36" width="6" height="6" fill="#e00"/>
+    <rect x="36" y="36" width="6" height="6" fill="#e00"/>
+    <rect x="42" y="36" width="6" height="6" fill="#e00"/>
+    <rect x="48" y="36" width="6" height="6" fill="#e00"/>
+    <rect x="60" y="36" width="6" height="6" fill="#e00"/>
+
+    <rect x="54" y="36" width="6" height="6" fill="#600"/>
+
+    <!-- Row 7 -->
+    <rect x="0" y="42" width="6" height="6" fill="#e00"/>
+    <rect x="60" y="42" width="6" height="6" fill="#e00"/>
+
+    <rect x="54" y="42" width="6" height="6" fill="#600"/>
+
+    <!-- Row 8 -->
+    <rect x="0" y="48" width="6" height="6" fill="#e00"/>
+    <rect x="30" y="48" width="6" height="6" fill="#e00"/>
+    <rect x="60" y="48" width="6" height="6" fill="#e00"/>
+
+    <rect x="42" y="48" width="6" height="6" fill="#600"/>
+    <rect x="48" y="48" width="6" height="6" fill="#600"/>
+    <rect x="54" y="48" width="6" height="6" fill="#600"/>
+
+    <!-- Row 9 -->
+    <rect x="6" y="54" width="6" height="6" fill="#e00"/>
+    <rect x="12" y="54" width="6" height="6" fill="#e00"/>
+    <rect x="48" y="54" width="6" height="6" fill="#e00"/>
+    <rect x="54" y="54" width="6" height="6" fill="#e00"/>
+
+    <rect x="43" y="54" width="6" height="6" fill="#600"/>
+
+    <!-- Row 10 -->
+    <rect x="18" y="60" width="6" height="6" fill="#e00"/>
+    <rect x="30" y="60" width="6" height="6" fill="#e00"/>
+    <rect x="42" y="60" width="6" height="6" fill="#e00"/>
+
+    <!-- Row 11 -->
+    <rect x="18" y="66" width="6" height="6" fill="#e00"/>
+    <rect x="24" y="66" width="6" height="6" fill="#e00"/>
+    <rect x="30" y="66" width="6" height="6" fill="#e00"/>
+    <rect x="36" y="66" width="6" height="6" fill="#e00"/>
+    <rect x="42" y="66" width="6" height="6" fill="#e00"/>
+  </g>
+
   <!-- Text with dripping effect -->
-  <text x="150" y="120" fill="#e00" font-size="40" font-family="monospace" filter="url(#drip)">
+  <text x="95" y="60" fill="#e00" font-size="40" font-family="monospace" filter="url(#drip)">
     Plague &amp; Pain
   </text>
 </svg>
