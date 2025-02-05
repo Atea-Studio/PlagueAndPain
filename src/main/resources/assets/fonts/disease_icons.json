@@ -1,7 +1,7 @@
 {
   "providers": [
     {
-      "file": "disease:hud/disease_background.png",
+      "file": "plagueandpain:hud/disease_background.png",
       "chars": [
         "\ueffd"
       ],
@@ -10,7 +10,7 @@
       "type": "bitmap"
     },
     {
-      "file": "disease:hud/injury_background.png",
+      "file": "plagueandpain:hud/injury_background.png",
       "chars": [
         "\ueffe"
       ],
@@ -19,7 +19,7 @@
       "type": "bitmap"
     },
     {
-      "file": "disease:hud/combo_background.png",
+      "file": "plagueandpain:hud/combo_background.png",
       "chars": [
         "\uefff"
       ],
@@ -28,7 +28,7 @@
       "type": "bitmap"
     },
     {
-      "file": "disease:hud/injury/broken_leg.png",
+      "file": "plagueandpain:hud/injury/broken_leg.png",
       "chars": [
         "\uf100"
       ],
@@ -37,7 +37,7 @@
       "type": "bitmap"
     },
     {
-      "file": "disease:hud/injury/open_wound.png",
+      "file": "plagueandpain:hud/injury/open_wound.png",
       "chars": [
         "\uf101"
       ],
@@ -46,7 +46,7 @@
       "type": "bitmap"
     },
     {
-      "file": "disease:hud/disease/cough.png",
+      "file": "plagueandpain:hud/disease/cough.png",
       "chars": [
         "\uf200"
       ],
@@ -55,7 +55,7 @@
       "type": "bitmap"
     },
     {
-      "file": "disease:hud/disease/fever.png",
+      "file": "plagueandpain:hud/disease/fever.png",
       "chars": [
         "\uf201"
       ],
@@ -64,7 +64,7 @@
       "type": "bitmap"
     },
     {
-      "file": "disease:hud/disease/plague.png",
+      "file": "plagueandpain:hud/disease/plague.png",
       "chars": [
         "\uf202"
       ],
@@ -73,7 +73,7 @@
       "type": "bitmap"
     },
     {
-      "file": "disease:hud/disease/pneumonia.png",
+      "file": "plagueandpain:hud/disease/pneumonia.png",
       "chars": [
         "\uf203"
       ],
@@ -82,7 +82,7 @@
       "type": "bitmap"
     },
     {
-      "file": "disease:hud/disease/rabies.png",
+      "file": "plagueandpain:hud/disease/rabies.png",
       "chars": [
         "\uf204"
       ],

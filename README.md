@@ -1,2 +1,2 @@
-# Disease
-Disease plugin for Nova
+# Plague & Pain
+Disease and injury plugin for Nova

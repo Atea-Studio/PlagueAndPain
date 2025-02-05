@@ -11,7 +11,7 @@ import xyz.xenondevs.nova.util.registerEvents
 import xyz.xenondevs.nova.world.player.ability.AbilityManager
 
 @Init(stage = InitStage.POST_WORLD)
-object DiseaseAbilityListener: Listener {
+object DiseaseAndInjuryAbilityListener: Listener {
     init {
         this.registerEvents()
     }
