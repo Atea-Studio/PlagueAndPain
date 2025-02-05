@@ -20,7 +20,7 @@ dependencies {
 
 
 addon {
-    name = "Disease"
+    name = "PlagueAndPain"
     version = project.version.toString()
     main = "fr.ateastudio.plagueandpain.PlagueAndPain"
     authors = listOf("Katalijst")
