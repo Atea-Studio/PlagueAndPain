@@ -1,4 +1,4 @@
-group = "fr.ateastudio.disease"
+group = "fr.ateastudio.plagueandpain"
 version = "1.0-SNAPSHOT" // TODO: Change this to your addon version
 
 plugins {
@@ -22,11 +22,11 @@ dependencies {
 addon {
     name = "Disease"
     version = project.version.toString()
-    main = "fr.ateastudio.disease.Disease"
+    main = "fr.ateastudio.plagueandpain.PlagueAndPain"
     authors = listOf("Katalijst")
-    description = "Disease Server Addon"
+    description = "Disease and injuries Server Addon"
     website = "https://atea-studio.fr/nova-addons"
-    prefix = "Disease"
+    prefix = "Plague&Pain"
     
     // output directory for the generated addon jar is read from the "outDir" project property (-PoutDir="...")
     val outDir = project.findProperty("outDir")

@@ -1,4 +1,4 @@
-rootProject.name = "disease"
+rootProject.name = "plagueandpain"
 
 dependencyResolutionManagement {
     repositories {

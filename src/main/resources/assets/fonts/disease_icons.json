@@ -1,0 +1,94 @@
+{
+  "providers": [
+    {
+      "file": "disease:hud/disease_background.png",
+      "chars": [
+        "\ueffd"
+      ],
+      "height": 24,
+      "ascent": -41,
+      "type": "bitmap"
+    },
+    {
+      "file": "disease:hud/injury_background.png",
+      "chars": [
+        "\ueffe"
+      ],
+      "height": 24,
+      "ascent": -41,
+      "type": "bitmap"
+    },
+    {
+      "file": "disease:hud/combo_background.png",
+      "chars": [
+        "\uefff"
+      ],
+      "height": 24,
+      "ascent": -41,
+      "type": "bitmap"
+    },
+    {
+      "file": "disease:hud/injury/broken_leg.png",
+      "chars": [
+        "\uf100"
+      ],
+      "height": 18,
+      "ascent": -44,
+      "type": "bitmap"
+    },
+    {
+      "file": "disease:hud/injury/open_wound.png",
+      "chars": [
+        "\uf101"
+      ],
+      "height": 18,
+      "ascent": -44,
+      "type": "bitmap"
+    },
+    {
+      "file": "disease:hud/disease/cough.png",
+      "chars": [
+        "\uf200"
+      ],
+      "height": 18,
+      "ascent": -44,
+      "type": "bitmap"
+    },
+    {
+      "file": "disease:hud/disease/fever.png",
+      "chars": [
+        "\uf201"
+      ],
+      "height": 18,
+      "ascent": -44,
+      "type": "bitmap"
+    },
+    {
+      "file": "disease:hud/disease/plague.png",
+      "chars": [
+        "\uf202"
+      ],
+      "height": 18,
+      "ascent": -44,
+      "type": "bitmap"
+    },
+    {
+      "file": "disease:hud/disease/pneumonia.png",
+      "chars": [
+        "\uf203"
+      ],
+      "height": 18,
+      "ascent": -44,
+      "type": "bitmap"
+    },
+    {
+      "file": "disease:hud/disease/rabies.png",
+      "chars": [
+        "\uf204"
+      ],
+      "height": 18,
+      "ascent": -44,
+      "type": "bitmap"
+    }
+  ]
+}
