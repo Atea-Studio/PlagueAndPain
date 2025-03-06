@@ -4,6 +4,8 @@ import fr.ateastudio.plagueandpain.util.DiseaseManager
 import fr.ateastudio.plagueandpain.util.InjuryManager
 import fr.ateastudio.plagueandpain.hud.HudOverlay
 import org.bukkit.entity.Player
+import xyz.xenondevs.nova.config.Configs
+import xyz.xenondevs.nova.config.optionalEntry
 import xyz.xenondevs.nova.ui.overlay.actionbar.ActionbarOverlayManager
 import xyz.xenondevs.nova.world.player.ability.Ability
 
