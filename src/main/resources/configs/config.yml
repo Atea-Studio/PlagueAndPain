@@ -1,10 +1,4 @@
 injury:
-  broken_leg:
-    chance: 10.0
-    fall_damage_threshold: 0.5
-    fall_height_threshold: 3.5
-  open_wound:
-    chance: 10.0
   armor_pieces_for_immunity:
     - adventurecraft:copper_helmet
     - adventurecraft:copper_chestplate

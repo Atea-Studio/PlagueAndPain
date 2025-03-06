@@ -5,6 +5,6 @@ import xyz.xenondevs.nova.config.entry
 
 object OpenWoundConfig {
     val Chance : Double
-        get() = Configs["plagueandpain:config"].entry<Double>("injury","open_wound", "chance").get()
+        get() = Configs["plagueandpain:open_wound"].entry<Double>("chance").get()
     
 }

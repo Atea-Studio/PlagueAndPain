@@ -5,12 +5,12 @@ import xyz.xenondevs.nova.config.entry
 
 object BrokenLegConfig {
     val Chance : Double
-        get() = Configs["plagueandpain:config"].entry<Double>("injury","broken_leg", "chance").get()
+        get() = Configs["plagueandpain:broken_leg"].entry<Double>("chance").get()
     
     val FallDamageThreshold : Double
-        get() = Configs["plagueandpain:config"].entry<Double>("injury","broken_leg", "fall_damage_threshold").get()
+        get() = Configs["plagueandpain:broken_leg"].entry<Double>("fall_damage_threshold").get()
     
     val FallHeightThreshold : Double
-        get() = Configs["plagueandpain:config"].entry<Double>("injury","broken_leg", "fall_height_threshold").get()
+        get() = Configs["plagueandpain:broken_leg"].entry<Double>("fall_height_threshold").get()
     
 }
