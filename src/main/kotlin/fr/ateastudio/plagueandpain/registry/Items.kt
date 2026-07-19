@@ -27,11 +27,16 @@ object Items {
         maxStackSize(16)
     }
     
-    val COUGH_ICON = item("cough_icon") {}
-    val FEVER_ICON = item("fever_icon") {}
-    val PLAGUE_ICON = item("plague_icon") {}
-    val PNEUMONIA_ICON = item("pneumonia_icon") {}
-    val RABIES_ICON = item("rabies_icon") {}
-    val BROKEN_LEG_ICON = item("broken_leg_icon") {}
-    val OPEN_WOUND_ICON = item("open_wound_icon") {}
+    val COUGH_ICON = item("cough_icon") { hidden(true) }
+    val FEVER_ICON = item("fever_icon") { hidden(true) }
+    val PLAGUE_ICON = item("plague_icon") { hidden(true) }
+    val PNEUMONIA_ICON = item("pneumonia_icon") { hidden(true) }
+    val RABIES_ICON = item("rabies_icon") { hidden(true) }
+    val BROKEN_LEG_ICON = item("broken_leg_icon") { hidden(true) }
+    val OPEN_WOUND_ICON = item("open_wound_icon") { hidden(true) }
+    val OK = item("ok") { hidden(true) }
+    val EXIT = item("exit") { hidden(true) }
+    val SEVERITY_LOW = item("severity_low") { hidden(true) }
+    val SEVERITY_MEDIUM = item("severity_medium") { hidden(true) }
+    val SEVERITY_HIGH = item("severity_high") { hidden(true) }
 }

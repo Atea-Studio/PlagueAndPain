@@ -15,6 +15,7 @@ import fr.ateastudio.plagueandpain.registry.Items
 import fr.ateastudio.plagueandpain.util.ConditionSeverity
 import fr.ateastudio.plagueandpain.util.DiseaseManager
 import fr.ateastudio.plagueandpain.util.InjuryManager
+import io.papermc.paper.datacomponent.DataComponentTypes
 import kotlin.math.roundToInt
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
@@ -22,6 +23,7 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.SkullMeta
 import xyz.xenondevs.invui.Click
 import xyz.xenondevs.invui.gui.Gui
 import xyz.xenondevs.invui.item.AbstractItem
@@ -53,7 +55,7 @@ internal class ConditionGuideGui(private val player: Player) {
     private fun openDetailWindow(condition: GuideCondition) {
         Window.builder()
             .setViewer(player)
-            .setTitle(GuiTextures.CONDITION_DETAIL.getTitle(tc(condition.nameKey, NamedTextColor.WHITE)))
+            .setTitle(GuiTextures.CONDITION_DETAIL.component)
             .setUpperGui(buildDetailGui(condition))
             .build()
             .open()
@@ -64,15 +66,13 @@ internal class ConditionGuideGui(private val player: Player) {
             .setStructure(
                 "S . G . . . . . X",
                 ". . . . . . . . .",
-                "D C F P . I B W .",
+                ". C F P . B W . .",
                 ". N R . . . . . .",
                 ". . . . . . . . O"
             )
             .addIngredient('S', navStatusButton(false))
             .addIngredient('G', navGuideButton(true))
             .addIngredient('X', navExitButton())
-            .addIngredient('D', staticItem(Material.GREEN_DYE, tc("menu.plagueandpain.guide.section.diseases", NamedTextColor.WHITE), emptyList()))
-            .addIngredient('I', staticItem(Material.RED_DYE, tc("menu.plagueandpain.guide.section.injuries", NamedTextColor.WHITE), emptyList()))
             .addIngredient('O', staticItem(
                 Material.BOOK,
                 tc("menu.plagueandpain.guide.info.title", NamedTextColor.WHITE),
@@ -98,13 +98,15 @@ internal class ConditionGuideGui(private val player: Player) {
             .setStructure(
                 "S . G . . . . . X",
                 ". . . . . . . . .",
-                ". . . . . . . . .",
+                ". . s . . . t . .",
                 ". . d . . . i . .",
                 ". . . . . . . . ."
             )
             .addIngredient('S', navStatusButton(true))
             .addIngredient('G', navGuideButton(false))
             .addIngredient('X', navExitButton())
+            .addIngredient('s', diseaseSeverityIcon())
+            .addIngredient('t', injurySeverityIcon())
             .addIngredient('d', currentDiseaseButton())
             .addIngredient('i', currentInjuryButton())
             .build()
@@ -147,8 +149,8 @@ internal class ConditionGuideGui(private val player: Player) {
     private fun navStatusButton(active: Boolean): AbstractItem {
         return object : AbstractItem() {
             override fun getItemProvider(player: Player): ItemProvider {
-                return ItemBuilder(if (active) Material.LIME_DYE else Material.GRAY_DYE)
-                    .setName(tc("menu.plagueandpain.nav.status.title", if (active) NamedTextColor.GREEN else NamedTextColor.WHITE))
+                return ItemBuilder(statusTabIcon(player))
+                    .setName(tc("menu.plagueandpain.nav.status.title", NamedTextColor.WHITE))
                     .addLoreLines(tc("menu.plagueandpain.nav.status.l1", NamedTextColor.GRAY))
                     .clearModifiers()
             }
@@ -164,8 +166,10 @@ internal class ConditionGuideGui(private val player: Player) {
     private fun navGuideButton(active: Boolean): AbstractItem {
         return object : AbstractItem() {
             override fun getItemProvider(player: Player): ItemProvider {
-                return ItemBuilder(if (active) Material.LIME_DYE else Material.GRAY_DYE)
-                    .setName(tc("menu.plagueandpain.nav.guide.title", if (active) NamedTextColor.GREEN else NamedTextColor.WHITE))
+                @Suppress("UnstableApiUsage")
+                return ItemBuilder(Material.ENCHANTED_BOOK)
+                    .set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, false)
+                    .setName(tc("menu.plagueandpain.nav.guide.title", NamedTextColor.WHITE))
                     .addLoreLines(tc("menu.plagueandpain.nav.guide.l1", NamedTextColor.GRAY))
                     .clearModifiers()
             }
@@ -181,7 +185,7 @@ internal class ConditionGuideGui(private val player: Player) {
     private fun navExitButton(): AbstractItem {
         return object : AbstractItem() {
             override fun getItemProvider(player: Player): ItemProvider {
-                return ItemBuilder(Material.BARRIER)
+                return ItemBuilder(ItemUtils.getItemStack(Items.EXIT.id.toString()))
                     .setName(tc("menu.plagueandpain.nav.exit.title", NamedTextColor.RED))
                     .addLoreLines(tc("menu.plagueandpain.nav.exit.l1", NamedTextColor.GRAY))
                     .clearModifiers()
@@ -217,14 +221,13 @@ internal class ConditionGuideGui(private val player: Player) {
             override fun getItemProvider(player: Player): ItemProvider {
                 val disease = DiseaseManager.getType(player)
                 if (disease == null) {
-                    return ItemBuilder(Material.LIME_DYE)
+                    return ItemBuilder(ItemUtils.getItemStack(Items.OK.id.toString()))
                         .setName(tc("menu.plagueandpain.status.disease.none.title", NamedTextColor.GREEN))
                         .addLoreLines(tc("menu.plagueandpain.status.disease.none.l1", NamedTextColor.GRAY))
                         .clearModifiers()
                 }
                 
                 val progress = DiseaseManager.getProgress(player)
-                val severity = ConditionSeverity.fromProgress(progress)
                 val mapped = fromDisease(disease)
                 return ItemBuilder(conditionIcon(mapped))
                     .setName(
@@ -236,7 +239,6 @@ internal class ConditionGuideGui(private val player: Player) {
                     )
                     .addLoreLines(
                         tc("menu.plagueandpain.status.progress", NamedTextColor.GRAY, progressLabel(progress)),
-                        severityLine(severity),
                         tc("menu.plagueandpain.status.open_details", NamedTextColor.YELLOW)
                     )
                     .clearModifiers()
@@ -254,14 +256,13 @@ internal class ConditionGuideGui(private val player: Player) {
             override fun getItemProvider(player: Player): ItemProvider {
                 val injury = InjuryManager.getType(player)
                 if (injury == null) {
-                    return ItemBuilder(Material.LIME_DYE)
+                    return ItemBuilder(ItemUtils.getItemStack(Items.OK.id.toString()))
                         .setName(tc("menu.plagueandpain.status.injury.none.title", NamedTextColor.GREEN))
                         .addLoreLines(tc("menu.plagueandpain.status.injury.none.l1", NamedTextColor.GRAY))
                         .clearModifiers()
                 }
                 
                 val progress = InjuryManager.getProgress(player)
-                val severity = ConditionSeverity.fromProgress(progress)
                 val mapped = fromInjury(injury)
                 return ItemBuilder(conditionIcon(mapped))
                     .setName(
@@ -273,7 +274,6 @@ internal class ConditionGuideGui(private val player: Player) {
                     )
                     .addLoreLines(
                         tc("menu.plagueandpain.status.progress", NamedTextColor.GRAY, progressLabel(progress)),
-                        severityLine(severity),
                         tc("menu.plagueandpain.status.open_details", NamedTextColor.YELLOW)
                     )
                     .clearModifiers()
@@ -282,6 +282,38 @@ internal class ConditionGuideGui(private val player: Player) {
             override fun handleClick(clickType: ClickType, player: Player, click: Click) {
                 val injury = InjuryManager.getType(player) ?: return
                 openDetailWindow(fromInjury(injury))
+            }
+        }
+    }
+    
+    private fun diseaseSeverityIcon(): AbstractItem {
+        return object : AbstractItem() {
+            override fun getItemProvider(player: Player): ItemProvider {
+                val disease = DiseaseManager.getType(player) ?: return ItemBuilder(Material.AIR)
+                val severity = ConditionSeverity.fromProgress(DiseaseManager.getProgress(player))
+                return ItemBuilder(severityIcon(severity))
+                    .setName(tc("menu.plagueandpain.status.severity", NamedTextColor.WHITE, severityName(severity)))
+                    .addLoreLines(tc("menu.plagueandpain.status.disease.active.title", NamedTextColor.GRAY, t(fromDisease(disease).nameKey)))
+                    .clearModifiers()
+            }
+            
+            override fun handleClick(clickType: ClickType, player: Player, click: Click) {
+            }
+        }
+    }
+    
+    private fun injurySeverityIcon(): AbstractItem {
+        return object : AbstractItem() {
+            override fun getItemProvider(player: Player): ItemProvider {
+                val injury = InjuryManager.getType(player) ?: return ItemBuilder(Material.AIR)
+                val severity = ConditionSeverity.fromProgress(InjuryManager.getProgress(player))
+                return ItemBuilder(severityIcon(severity))
+                    .setName(tc("menu.plagueandpain.status.severity", NamedTextColor.WHITE, severityName(severity)))
+                    .addLoreLines(tc("menu.plagueandpain.status.injury.active.title", NamedTextColor.GRAY, t(fromInjury(injury).nameKey)))
+                    .clearModifiers()
+            }
+            
+            override fun handleClick(clickType: ClickType, player: Player, click: Click) {
             }
         }
     }
@@ -304,6 +336,14 @@ internal class ConditionGuideGui(private val player: Player) {
     
     private fun conditionIcon(condition: GuideCondition): ItemStack {
         return ItemUtils.getItemStack(condition.iconItemId)
+    }
+    
+    private fun statusTabIcon(player: Player): ItemStack {
+        val head = ItemStack(Material.PLAYER_HEAD)
+        val meta = head.itemMeta as SkullMeta
+        meta.owningPlayer = player
+        head.itemMeta = meta
+        return head
     }
 
     private fun treatmentItem(condition: GuideCondition): ItemStack {
@@ -446,16 +486,6 @@ internal class ConditionGuideGui(private val player: Player) {
         return Component.text("$rounded%")
     }
     
-    private fun severityLine(severity: ConditionSeverity): Component {
-        val color = when (severity) {
-            ConditionSeverity.MILD -> NamedTextColor.GREEN
-            ConditionSeverity.MODERATE -> NamedTextColor.YELLOW
-            ConditionSeverity.SEVERE -> NamedTextColor.GOLD
-            ConditionSeverity.CRITICAL -> NamedTextColor.RED
-        }
-        return tc("menu.plagueandpain.status.severity", color, severityName(severity))
-    }
-    
     private fun severityName(severity: ConditionSeverity): Component {
         return when (severity) {
             ConditionSeverity.MILD -> t("condition.plagueandpain.severity.mild")
@@ -463,6 +493,15 @@ internal class ConditionGuideGui(private val player: Player) {
             ConditionSeverity.SEVERE -> t("condition.plagueandpain.severity.severe")
             ConditionSeverity.CRITICAL -> t("condition.plagueandpain.severity.critical")
         }
+    }
+    
+    private fun severityIcon(severity: ConditionSeverity): ItemStack {
+        val id = when (severity) {
+            ConditionSeverity.MILD -> Items.SEVERITY_LOW.id.toString()
+            ConditionSeverity.MODERATE -> Items.SEVERITY_MEDIUM.id.toString()
+            ConditionSeverity.SEVERE, ConditionSeverity.CRITICAL -> Items.SEVERITY_HIGH.id.toString()
+        }
+        return ItemUtils.getItemStack(id)
     }
     
     private fun fromDisease(disease: Disease): GuideCondition {
