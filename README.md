@@ -1,2 +1,2 @@
 # Plague & Pain
-Disease and injury plugin for Nova
+Disease and injury addon for Nova with progressive conditions, HUD indicators, treatment items, and transmissible blood samples.

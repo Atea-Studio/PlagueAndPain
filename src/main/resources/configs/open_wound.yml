@@ -1,1 +1,10 @@
 chance: 10.0
+progress_per_tick: 0.04
+bleed_interval_ticks: 80
+bleed_damage:
+  mild: 0.5
+  moderate: 1.0
+  severe: 1.5
+  critical: 2.0
+infection_threshold: 65.0
+fever_infection_chance: 6.0

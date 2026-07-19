@@ -4,6 +4,7 @@ injury:
     - adventurecraft:copper_chestplate
     - adventurecraft:copper_leggings
     - adventurecraft:copper_boots
+  bandage_relief: 35.0
 
 disease:
   armor_pieces_for_immunity:
@@ -11,3 +12,4 @@ disease:
     - adventurecraft:copper_chestplate
     - adventurecraft:copper_leggings
     - adventurecraft:copper_boots
+  medicine_relief: 55.0

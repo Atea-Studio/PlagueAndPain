@@ -1,11 +1,8 @@
 package fr.ateastudio.plagueandpain.ability
 
-import fr.ateastudio.plagueandpain.util.DiseaseManager
-import fr.ateastudio.plagueandpain.util.InjuryManager
 import fr.ateastudio.plagueandpain.hud.HudOverlay
+import fr.ateastudio.plagueandpain.service.ConditionService
 import org.bukkit.entity.Player
-import xyz.xenondevs.nova.config.Configs
-import xyz.xenondevs.nova.config.optionalEntry
 import xyz.xenondevs.nova.ui.overlay.actionbar.ActionbarOverlayManager
 import xyz.xenondevs.nova.world.player.ability.Ability
 
@@ -22,19 +19,7 @@ class DiseaseAndInjuryAbility(player: Player) : Ability(player) {
     }
     
     override fun handleTick() {
-        val injury = InjuryManager.getInjuryType(player)
-        val disease = DiseaseManager.getDiseaseType(player)
-        
-        if (injury != null) {
-            InjuryManager.addInjuryProgress(player, injury.progressByTick)
-        }
-        
-        if (disease != null) {
-            DiseaseManager.addDiseaseProgress(player, disease.progressByTick)
-        }
-        
-        diseaseOverlay.refresh(player.mainHand, disease, injury)
+        val conditions = ConditionService.tick(player)
+        diseaseOverlay.refresh(player.mainHand, conditions.disease, conditions.injury)
     }
-    
-    
 }

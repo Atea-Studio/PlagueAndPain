@@ -1,13 +1,24 @@
 package fr.ateastudio.plagueandpain
 
-enum class Injury(val char: Char, val progressByTick: Double, val tag: String) {
-    BROKEN_LEG('\uF100', 0.1,"broken_leg"),
-    OPEN_WOUND('\uF101',0.1,"open_wound");
+import fr.ateastudio.plagueandpain.util.TaggedCondition
+
+enum class Injury(
+    override val tag: String,
+    val char: Char,
+    val displayName: String
+) : TaggedCondition {
+    BROKEN_LEG("broken_leg", '\uF100', "Broken Leg"),
+    OPEN_WOUND("open_wound", '\uF101', "Open Wound");
     
     companion object {
-        fun fromTag(tag: String?): Injury? {
-            if (tag == null) return null
-            return Injury.entries.find { it.tag.equals(tag, true) }
+        fun fromStoredValue(value: String?): Injury? {
+            if (value == null) {
+                return null
+            }
+            
+            return entries.find { injury ->
+                injury.tag.equals(value, true) || injury.name.equals(value, true)
+            }
         }
     }
 }

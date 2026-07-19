@@ -1,16 +1,27 @@
 package fr.ateastudio.plagueandpain
 
-enum class Disease(val char: Char, val progressByTick: Double, val tag: String) {
-    COUGH('\uF200', 0.1,"cough"),
-    FEVER('\uF201', 0.1,"fever"),
-    PLAGUE('\uF202', 0.1,"plague"),
-    PNEUMONIA('\uF203', 0.1,"pneumonia"),
-    RABIES('\uF204', 0.1,"rabies");
+import fr.ateastudio.plagueandpain.util.TaggedCondition
+
+enum class Disease(
+    override val tag: String,
+    val char: Char,
+    val displayName: String
+) : TaggedCondition {
+    COUGH("cough", '\uF200', "Cough"),
+    FEVER("fever", '\uF201', "Fever"),
+    PLAGUE("plague", '\uF202', "Plague"),
+    PNEUMONIA("pneumonia", '\uF203', "Pneumonia"),
+    RABIES("rabies", '\uF204', "Rabies");
     
     companion object {
-        fun fromTag(tag: String?): Disease? {
-            if (tag == null) return null
-            return Disease.entries.find { it.tag.equals(tag, true) }
+        fun fromStoredValue(value: String?): Disease? {
+            if (value == null) {
+                return null
+            }
+            
+            return entries.find { disease ->
+                disease.tag.equals(value, true) || disease.name.equals(value, true)
+            }
         }
     }
 }

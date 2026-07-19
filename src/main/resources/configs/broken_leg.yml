@@ -1,3 +1,9 @@
 chance: 10.0
 fall_damage_threshold: 0.5
 fall_height_threshold: 3.5
+progress_per_tick: 0.025
+slowness:
+  mild_amplifier: 0
+  moderate_amplifier: 1
+  severe_amplifier: 2
+  critical_amplifier: 3
