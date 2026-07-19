@@ -1,15 +1,11 @@
 injury:
-  armor_pieces_for_immunity:
-    - adventurecraft:copper_helmet
-    - adventurecraft:copper_chestplate
-    - adventurecraft:copper_leggings
-    - adventurecraft:copper_boots
   bandage_relief: 35.0
 
 disease:
   armor_pieces_for_immunity:
-    - adventurecraft:copper_helmet
-    - adventurecraft:copper_chestplate
-    - adventurecraft:copper_leggings
-    - adventurecraft:copper_boots
+    - minecraft:copper_helmet
+    - minecraft:copper_chestplate
+    - minecraft:copper_leggings
+    - minecraft:copper_boots
   medicine_relief: 55.0
+  immunity_chance_reduction_per_heal: 5.0

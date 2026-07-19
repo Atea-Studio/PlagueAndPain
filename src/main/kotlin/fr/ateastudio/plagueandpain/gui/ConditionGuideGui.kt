@@ -343,6 +343,7 @@ internal class ConditionGuideGui(private val player: Player) {
         val meta = head.itemMeta as SkullMeta
         meta.owningPlayer = player
         head.itemMeta = meta
+        meta.displayName(tc("menu.plagueandpain.status.tab", NamedTextColor.WHITE))
         return head
     }
 
@@ -496,12 +497,11 @@ internal class ConditionGuideGui(private val player: Player) {
     }
     
     private fun severityIcon(severity: ConditionSeverity): ItemStack {
-        val id = when (severity) {
-            ConditionSeverity.MILD -> Items.SEVERITY_LOW.id.toString()
-            ConditionSeverity.MODERATE -> Items.SEVERITY_MEDIUM.id.toString()
-            ConditionSeverity.SEVERE, ConditionSeverity.CRITICAL -> Items.SEVERITY_HIGH.id.toString()
+        return when (severity) {
+            ConditionSeverity.MILD -> Items.SEVERITY_LOW.createItemStack()
+            ConditionSeverity.MODERATE -> Items.SEVERITY_MEDIUM.createItemStack()
+            ConditionSeverity.SEVERE, ConditionSeverity.CRITICAL -> Items.SEVERITY_HIGH.createItemStack()
         }
-        return ItemUtils.getItemStack(id)
     }
     
     private fun fromDisease(disease: Disease): GuideCondition {

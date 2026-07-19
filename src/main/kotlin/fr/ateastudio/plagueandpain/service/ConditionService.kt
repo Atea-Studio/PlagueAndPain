@@ -13,6 +13,7 @@ import fr.ateastudio.plagueandpain.config.PneumoniaConfig
 import fr.ateastudio.plagueandpain.config.RabiesConfig
 import fr.ateastudio.plagueandpain.util.ConditionSeverity
 import fr.ateastudio.plagueandpain.util.DiseaseManager
+import fr.ateastudio.plagueandpain.util.DiseaseImmunityManager
 import fr.ateastudio.plagueandpain.util.InjuryManager
 import kotlin.random.Random
 import net.kyori.adventure.text.Component
@@ -51,7 +52,7 @@ object ConditionService {
         if (!DiseaseManager.canAcquire(player)) {
             return false
         }
-        if (chance != null && !roll(chance)) {
+        if (chance != null && !roll(DiseaseImmunityManager.adjustedInfectionChance(player, disease, chance))) {
             return false
         }
         
@@ -104,6 +105,7 @@ object ConditionService {
         val remaining = DiseaseManager.reduceProgress(player, AddonConfig.medicineRelief)
         
         if (remaining <= 0.0) {
+            DiseaseImmunityManager.registerSuccessfulHeal(player, disease)
             DiseaseManager.clear(player)
             player.sendMessage(
                 t("message.plagueandpain.medicine.cured", conditionName(disease))
@@ -323,8 +325,7 @@ object ConditionService {
         if (amplifier < 0) {
             return
         }
-        
-        player.addPotionEffect(PotionEffect(type, 40, amplifier, false, false, false), true)
+        player.addPotionEffect(PotionEffect(type, 40, amplifier, false, false, false))
     }
     
     private fun isExposedToRain(location: Location): Boolean {
