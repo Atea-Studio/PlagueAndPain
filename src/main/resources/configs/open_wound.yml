@@ -1,5 +1,5 @@
 chance: 10.0
-progress_per_tick: 0.04
+progress_per_tick: 0.02
 bleed_interval_ticks: 80
 bleed_damage:
   mild: 0.5

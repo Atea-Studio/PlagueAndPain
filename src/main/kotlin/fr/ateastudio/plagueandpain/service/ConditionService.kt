@@ -141,17 +141,18 @@ object ConditionService {
     }
     
     fun sampleBlood(player: Player, target: Player): Boolean {
-        val disease = DiseaseManager.getType(target) ?: run {
+        val disease = DiseaseManager.getType(target)
+        val bloodSyringe = if (disease != null) createBloodSyringe(disease) else createBloodSyringe()
+        replaceOneHeldItem(player, bloodSyringe)
+        if (disease == null) {
             player.sendMessage(
                 t("message.plagueandpain.blood.no_disease", Component.text(target.name))
             )
-            return false
+        } else {
+            player.sendMessage(
+                t("message.plagueandpain.blood.sample_collected", Component.text(target.name))
+            )
         }
-        
-        replaceOneHeldItem(player, createBloodSyringe(disease))
-        player.sendMessage(
-            t("message.plagueandpain.blood.sample_collected", Component.text(target.name))
-        )
         return true
     }
     
@@ -295,6 +296,10 @@ object ConditionService {
         meta.persistentDataContainer.set(bloodDiseaseKey, PersistentDataType.STRING, disease.tag)
         item.itemMeta = meta
         return item
+    }
+    
+    private fun createBloodSyringe(): ItemStack {
+        return ItemUtils.getItemStack("plagueandpain:blood_syringe")
     }
     
     private fun createEmptySyringe(): ItemStack {

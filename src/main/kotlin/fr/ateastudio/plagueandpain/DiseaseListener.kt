@@ -8,21 +8,32 @@ import fr.ateastudio.plagueandpain.util.InjuryManager
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.entity.Zombie
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerInteractEntityEvent
+import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerItemConsumeEvent
 import org.bukkit.inventory.EquipmentSlot
+import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.SkullMeta
+import org.bukkit.persistence.PersistentDataType
 import xyz.xenondevs.nova.initialize.Init
 import xyz.xenondevs.nova.initialize.InitStage
+import xyz.xenondevs.nova.util.NamespacedKey
 import xyz.xenondevs.nova.util.item.novaItem
 import xyz.xenondevs.nova.util.registerEvents
 
+@Suppress("unused")
 @Init(stage = InitStage.POST_WORLD)
 object DiseaseListener : Listener {
+    
+    private val plagueDeathPendingKey = NamespacedKey(PlagueAndPain, "plague_death_pending")
+    
     init {
         this.registerEvents()
     }
@@ -62,22 +73,82 @@ object DiseaseListener : Listener {
     }
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    private fun onConditionDamage(event: EntityDamageEvent) {
+        val player = event.entity as? Player ?: return
+        if (DiseaseManager.getType(player) != Disease.PLAGUE) {
+            return
+        }
+        if (event.cause != EntityDamageEvent.DamageCause.CUSTOM) {
+            return
+        }
+        
+        val lethalThreshold = player.health + player.absorptionAmount
+        if (event.finalDamage >= lethalThreshold) {
+            player.persistentDataContainer.set(plagueDeathPendingKey, PersistentDataType.BYTE, 1)
+        } else {
+            player.persistentDataContainer.remove(plagueDeathPendingKey)
+        }
+    }
+    
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     private fun onInteractEntity(event: PlayerInteractEntityEvent) {
         if (event.hand != EquipmentSlot.HAND) {
             return
         }
         
         val target = event.rightClicked as? Player ?: return
-        when (event.player.inventory.itemInMainHand.novaItem) {
-            Items.SYRINGE -> ConditionService.sampleBlood(event.player, target)
-            Items.BLOOD_SYRINGE -> ConditionService.injectBlood(event.player, target)
-            else -> Unit
+        val acted = if (event.player.isSneaking) {
+            handleSyringeUse(event.player, event.player)
+        } else {
+            handleSyringeUse(event.player, target)
+        }
+        if (acted) {
+            event.isCancelled = true
+        }
+    }
+    
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    private fun onInteract(event: PlayerInteractEvent) {
+        if (!event.player.isSneaking || event.hand != EquipmentSlot.HAND) {
+            return
+        }
+        
+        val action = event.action
+        if (!action.isRightClick) {
+            return
+        }
+        
+        if (handleSyringeUse(event.player, event.player)) {
+            event.isCancelled = true
         }
     }
     
     @EventHandler(priority = EventPriority.MONITOR)
     private fun onDeath(event: PlayerDeathEvent) {
+        if (event.player.persistentDataContainer.get(plagueDeathPendingKey, PersistentDataType.BYTE)?.toInt() == 1) {
+            spawnPlagueZombie(event.player)
+        }
+        event.player.persistentDataContainer.remove(plagueDeathPendingKey)
         DiseaseManager.clear(event.player)
         InjuryManager.clear(event.player)
+    }
+    
+    private fun spawnPlagueZombie(player: Player) {
+        val zombie = player.world.spawn(player.location, Zombie::class.java)
+        val head = ItemStack(Material.PLAYER_HEAD)
+        val headMeta = head.itemMeta as SkullMeta
+        headMeta.owningPlayer = player
+        head.itemMeta = headMeta
+        
+        zombie.equipment.setHelmet(head)
+        zombie.equipment.helmetDropChance = 0f
+    }
+    
+    private fun handleSyringeUse(user: Player, target: Player): Boolean {
+        return when (user.inventory.itemInMainHand.novaItem) {
+            Items.SYRINGE -> ConditionService.sampleBlood(user, target)
+            Items.BLOOD_SYRINGE -> ConditionService.injectBlood(user, target)
+            else -> false
+        }
     }
 }

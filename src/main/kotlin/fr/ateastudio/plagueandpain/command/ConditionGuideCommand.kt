@@ -4,6 +4,8 @@ import com.mojang.brigadier.Command
 import com.mojang.brigadier.arguments.DoubleArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
+import com.mojang.brigadier.suggestion.Suggestions
+import com.mojang.brigadier.suggestion.SuggestionsBuilder
 import com.mojang.brigadier.tree.LiteralCommandNode
 import fr.ateastudio.plagueandpain.Disease
 import fr.ateastudio.plagueandpain.Injury
@@ -16,6 +18,7 @@ import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import java.util.concurrent.CompletableFuture
 
 object ConditionGuideCommand {
 
@@ -158,10 +161,12 @@ object ConditionGuideCommand {
                         Commands.literal("give")
                             .then(
                                 Commands.argument("player", StringArgumentType.word())
+                                    .suggests { _, builder -> suggestOnlinePlayers(builder) }
                                     .then(
                                         Commands.literal("disease")
                                             .then(
                                                 Commands.argument("disease", StringArgumentType.word())
+                                                    .suggests { _, builder -> suggestDiseases(builder) }
                                                     .executes(executeAdminGiveDisease)
                                                     .then(
                                                         Commands.argument("progress", DoubleArgumentType.doubleArg(0.0, 100.0))
@@ -173,6 +178,7 @@ object ConditionGuideCommand {
                                         Commands.literal("injury")
                                             .then(
                                                 Commands.argument("injury", StringArgumentType.word())
+                                                    .suggests { _, builder -> suggestInjuries(builder) }
                                                     .executes(executeAdminGiveInjury)
                                                     .then(
                                                         Commands.argument("progress", DoubleArgumentType.doubleArg(0.0, 100.0))
@@ -186,6 +192,7 @@ object ConditionGuideCommand {
                         Commands.literal("clear")
                             .then(
                                 Commands.argument("player", StringArgumentType.word())
+                                    .suggests { _, builder -> suggestOnlinePlayers(builder) }
                                     .then(Commands.literal("all").executes(executeAdminClearAll))
                                     .then(Commands.literal("disease").executes(executeAdminClearDisease))
                                     .then(Commands.literal("injury").executes(executeAdminClearInjury))
@@ -207,6 +214,33 @@ object ConditionGuideCommand {
 
     private fun readProgress(ctx: CommandContext<CommandSourceStack>): Double {
         return runCatching { DoubleArgumentType.getDouble(ctx, "progress") }.getOrDefault(0.0)
+    }
+
+    private fun suggestOnlinePlayers(builder: SuggestionsBuilder): CompletableFuture<Suggestions> {
+        val remaining = builder.remaining.lowercase()
+        Bukkit.getOnlinePlayers()
+            .map { it.name }
+            .filter { it.lowercase().startsWith(remaining) }
+            .forEach { builder.suggest(it) }
+        return builder.buildFuture()
+    }
+
+    private fun suggestDiseases(builder: SuggestionsBuilder): CompletableFuture<Suggestions> {
+        val remaining = builder.remaining.lowercase()
+        Disease.entries
+            .map { it.tag }
+            .filter { it.startsWith(remaining) }
+            .forEach { builder.suggest(it) }
+        return builder.buildFuture()
+    }
+
+    private fun suggestInjuries(builder: SuggestionsBuilder): CompletableFuture<Suggestions> {
+        val remaining = builder.remaining.lowercase()
+        Injury.entries
+            .map { it.tag }
+            .filter { it.startsWith(remaining) }
+            .forEach { builder.suggest(it) }
+        return builder.buildFuture()
     }
 
     private fun progressText(value: Double): String = "%.1f%%".format(value)
