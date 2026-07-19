@@ -4,11 +4,13 @@ import fr.ateastudio.plagueandpain.util.TaggedCondition
 
 enum class Injury(
     override val tag: String,
-    val char: Char,
-    val displayName: String
+    val char: Char
 ) : TaggedCondition {
-    BROKEN_LEG("broken_leg", '\uF100', "Broken Leg"),
-    OPEN_WOUND("open_wound", '\uF101', "Open Wound");
+    BROKEN_LEG("broken_leg", '\uF100'),
+    OPEN_WOUND("open_wound", '\uF101');
+    
+    val translationKey: String
+        get() = "condition.plagueandpain.injury.$tag"
     
     companion object {
         fun fromStoredValue(value: String?): Injury? {

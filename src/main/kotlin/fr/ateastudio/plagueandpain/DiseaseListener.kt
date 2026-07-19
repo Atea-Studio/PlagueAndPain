@@ -3,6 +3,7 @@ package fr.ateastudio.plagueandpain
 import fr.ateastudio.plagueandpain.config.FeverConfig
 import fr.ateastudio.plagueandpain.registry.Items
 import fr.ateastudio.plagueandpain.service.ConditionService
+import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -35,13 +36,13 @@ object DiseaseListener : Listener {
                 player = event.player,
                 disease = Disease.FEVER,
                 chance = FeverConfig.rottenFleshChance,
-                message = "You developed a fever from spoiled food."
+                message = Component.translatable("message.plagueandpain.food.rotten_flesh_fever")
             )
             Material.SPIDER_EYE -> ConditionService.tryApplyDisease(
                 player = event.player,
                 disease = Disease.FEVER,
                 chance = FeverConfig.spiderEyeChance,
-                message = "The strange meal left you feverish."
+                message = Component.translatable("message.plagueandpain.food.spider_eye_fever")
             )
             else -> Unit
         }

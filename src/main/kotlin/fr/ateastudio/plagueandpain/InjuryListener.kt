@@ -5,6 +5,7 @@ import fr.ateastudio.plagueandpain.config.OpenWoundConfig
 import fr.ateastudio.plagueandpain.registry.Items
 import fr.ateastudio.plagueandpain.service.ConditionService
 import fr.ateastudio.plagueandpain.util.getItemId
+import net.kyori.adventure.text.Component
 import org.bukkit.Sound
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
@@ -39,7 +40,7 @@ object InjuryListener : Listener {
                 player = player,
                 injury = Injury.BROKEN_LEG,
                 chance = BrokenLegConfig.chance,
-                message = "You broke your leg."
+                message = Component.translatable("message.plagueandpain.injury.broken_leg")
             )
         ) {
             player.location.playSoundNearby(Sound.ENTITY_PLAYER_BIG_FALL, 1.0F, 2.0F)
@@ -64,7 +65,7 @@ object InjuryListener : Listener {
                 player = player,
                 injury = Injury.OPEN_WOUND,
                 chance = OpenWoundConfig.chance,
-                message = "You suffered an open wound."
+                message = Component.translatable("message.plagueandpain.injury.open_wound")
             )
         ) {
             player.location.playSoundNearby(Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0F, 2.0F)

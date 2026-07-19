@@ -1,0 +1,7 @@
+progress_per_tick: 0.02
+exposure_check_interval_ticks: 200
+rain_exposure_chance: 4.0
+water_exposure_chance: 8.0
+slowness_amplifier: 0
+pneumonia_threshold: 70.0
+pneumonia_starting_progress: 25.0

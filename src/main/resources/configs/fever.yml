@@ -1,0 +1,7 @@
+progress_per_tick: 0.03
+rotten_flesh_chance: 18.0
+spider_eye_chance: 35.0
+weakness_amplifier: 0
+hunger_amplifier: 0
+damage_interval_ticks: 120
+damage_per_pulse: 1.0

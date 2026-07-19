@@ -1,0 +1,4 @@
+- Kotlin JVM with Gradle Kotlin DSL (`build.gradle.kts`).
+- Nova addon plugin (`xyz.xenondevs.nova` via the Nova Gradle plugin) plus Paper API 1.21.11 snapshot.
+- Command/UI code uses Paper Brigadier + Adventure components; Nova supplies addon lifecycle, registries, configs, overlays, and gui textures.
+- Resource pack assets live under `src/main/resources/assets/...`; the addon uses Nova texture/font ids like `plagueandpain:hud/...`.

@@ -1,0 +1,6 @@
+progress_per_tick: 0.04
+animal_bite_chance: 16.0
+nausea_amplifier: 0
+weakness_amplifier: 1
+damage_interval_ticks: 100
+damage_per_pulse: 1.0

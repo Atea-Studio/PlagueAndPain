@@ -1,0 +1,5 @@
+- Nova addon main: `fr.ateastudio.plagueandpain.PlagueAndPain : Addon()`.
+- Source map: `ability/` ability + listener, `command/` Brigadier/Paper command entrypoints, `config/` typed Nova config wrappers, `gui/` inventory screens, `hud/` actionbar overlay, `registry/` addon registries, `service/` condition logic, `util/` persistence/helpers.
+- Runtime invariants: conditions are stored in player PDC via `PlayerConditionManager`; progression is 0-100 and severity is derived from `ConditionSeverity.fromProgress()`; disease/injury effects are tick-driven in `ConditionService`.
+- GUI screens should use Nova gui textures via `PlagueAndPain.guiTexture(...)` and title components; command registration uses Paper lifecycle events from the plugin lifecycle manager when a custom command is needed.
+- Key item/condition names: diseases = cough, fever, plague, pneumonia, rabies; injuries = broken_leg, open_wound; treatment items = bandage, medicine, syringe, blood_syringe.

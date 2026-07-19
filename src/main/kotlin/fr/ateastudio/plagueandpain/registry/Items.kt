@@ -26,4 +26,12 @@ object Items {
     val BLOOD_SYRINGE = item("blood_syringe") {
         maxStackSize(16)
     }
+    
+    val COUGH_ICON = item("cough_icon") {}
+    val FEVER_ICON = item("fever_icon") {}
+    val PLAGUE_ICON = item("plague_icon") {}
+    val PNEUMONIA_ICON = item("pneumonia_icon") {}
+    val RABIES_ICON = item("rabies_icon") {}
+    val BROKEN_LEG_ICON = item("broken_leg_icon") {}
+    val OPEN_WOUND_ICON = item("open_wound_icon") {}
 }

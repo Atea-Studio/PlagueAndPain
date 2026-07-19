@@ -4,14 +4,16 @@ import fr.ateastudio.plagueandpain.util.TaggedCondition
 
 enum class Disease(
     override val tag: String,
-    val char: Char,
-    val displayName: String
+    val char: Char
 ) : TaggedCondition {
-    COUGH("cough", '\uF200', "Cough"),
-    FEVER("fever", '\uF201', "Fever"),
-    PLAGUE("plague", '\uF202', "Plague"),
-    PNEUMONIA("pneumonia", '\uF203', "Pneumonia"),
-    RABIES("rabies", '\uF204', "Rabies");
+    COUGH("cough", '\uF200'),
+    FEVER("fever", '\uF201'),
+    PLAGUE("plague", '\uF202'),
+    PNEUMONIA("pneumonia", '\uF203'),
+    RABIES("rabies", '\uF204');
+    
+    val translationKey: String
+        get() = "condition.plagueandpain.disease.$tag"
     
     companion object {
         fun fromStoredValue(value: String?): Disease? {

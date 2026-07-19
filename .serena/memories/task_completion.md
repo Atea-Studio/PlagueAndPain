@@ -1,0 +1,3 @@
+- Run `.\gradlew.bat build` after code changes.
+- If the task affects packaging or resource-pack output, also run `.\gradlew.bat addonJar -PoutDir="<path>"`.
+- If memory or project metadata changed, run `serena memories check` from the repo root.
