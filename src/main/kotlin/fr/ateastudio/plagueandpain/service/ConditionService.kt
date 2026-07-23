@@ -17,6 +17,7 @@ import fr.ateastudio.plagueandpain.util.DiseaseImmunityManager
 import fr.ateastudio.plagueandpain.util.InjuryManager
 import kotlin.random.Random
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Location
 import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
@@ -142,7 +143,7 @@ object ConditionService {
     
     fun sampleBlood(player: Player, target: Player): Boolean {
         val disease = DiseaseManager.getType(target)
-        val bloodSyringe = if (disease != null) createBloodSyringe(disease) else createBloodSyringe()
+        val bloodSyringe = if (disease != null) createBloodSyringe(disease, target.name) else createBloodSyringe()
         replaceOneHeldItem(player, bloodSyringe)
         if (disease == null) {
             player.sendMessage(
@@ -290,10 +291,11 @@ object ConditionService {
         }
     }
     
-    private fun createBloodSyringe(disease: Disease): ItemStack {
+    private fun createBloodSyringe(disease: Disease, sourcePlayerName: String): ItemStack {
         val item = ItemUtils.getItemStack("plagueandpain:blood_syringe")
         val meta = item.itemMeta
         meta.persistentDataContainer.set(bloodDiseaseKey, PersistentDataType.STRING, disease.tag)
+        meta.lore(listOf(bloodSyringeLore(disease, sourcePlayerName)))
         item.itemMeta = meta
         return item
     }
@@ -309,6 +311,13 @@ object ConditionService {
     private fun getStoredDisease(item: ItemStack): Disease? {
         val storedValue = item.itemMeta.persistentDataContainer.get(bloodDiseaseKey, PersistentDataType.STRING)
         return Disease.fromStoredValue(storedValue)
+    }
+    
+    private fun bloodSyringeLore(disease: Disease, playerName: String): Component {
+        return Component.translatable(disease.translationKey)
+            .append(Component.text(" - "))
+            .append(Component.text(playerName))
+            .color(NamedTextColor.GRAY)
     }
     
     private fun replaceOneHeldItem(player: Player, replacement: ItemStack) {

@@ -1,0 +1,13 @@
+{
+  "result": "plagueandpain:medicine",
+  "shape": [
+    "sss",
+    "kkk",
+    "ppp"
+  ],
+  "ingredients": {
+    "s": "minecraft:sweet_berries",
+    "k": ["minecraft:kelp", "minecraft:dried_kelp"],
+    "p": "minecraft:paper"
+  }
+}

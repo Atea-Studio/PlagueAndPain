@@ -1,0 +1,12 @@
+{
+  "result": "plagueandpain:bandage",
+  "shape": [
+    "sps",
+    "ppp",
+    "sps"
+  ],
+  "ingredients": {
+    "s": "minecraft:string",
+    "p": "minecraft:paper"
+  }
+}

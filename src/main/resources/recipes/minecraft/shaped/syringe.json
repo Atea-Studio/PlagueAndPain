@@ -1,0 +1,11 @@
+{
+  "result": "plagueandpain:syringe",
+  "shape": [
+    " s",
+    "g "
+  ],
+  "ingredients": {
+    "s": "minecraft:iron_ingot",
+    "g": "minecraft:glass"
+  }
+}
