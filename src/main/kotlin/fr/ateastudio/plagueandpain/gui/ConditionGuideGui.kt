@@ -68,7 +68,7 @@ internal class ConditionGuideGui(private val player: Player) {
                 ". . . . . . . . .",
                 ". . . . . . . . .",
                 ". C F P . B W . .",
-                ". N R . 0 . . . ."
+                ". N R . O . . . ."
             )
             .addIngredient('S', navStatusButton(false))
             .addIngredient('G', navGuideButton(true))
@@ -118,8 +118,8 @@ internal class ConditionGuideGui(private val player: Player) {
                 "S . G . . . . . X",
                 ". . . . . . . . .",
                 ". . . . h . . . .",
-                ". . p . t . o . .",
-                ". . . . . . . . ."
+                ". . . . . . . . .",
+                ". . p . t . o . ."
             )
             .addIngredient('S', navStatusButton(false))
             .addIngredient('G', navGuideButton(false))
