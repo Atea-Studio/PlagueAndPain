@@ -1,5 +1,5 @@
 group = "fr.ateastudio.plagueandpain"
-version = "1.0-SNAPSHOT" // TODO: Change this to your addon version
+version = "1.0.0"
 
 plugins {
     alias(libs.plugins.kotlin)
