@@ -66,9 +66,9 @@ internal class ConditionGuideGui(private val player: Player) {
             .setStructure(
                 "S . G . . . . . X",
                 ". . . . . . . . .",
+                ". . . . . . . . .",
                 ". C F P . B W . .",
-                ". N R . . . . . .",
-                ". . . . . . . . O"
+                ". N R . 0 . . . ."
             )
             .addIngredient('S', navStatusButton(false))
             .addIngredient('G', navGuideButton(true))
