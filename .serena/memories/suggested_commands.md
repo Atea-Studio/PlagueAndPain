@@ -1,4 +1,0 @@
-- Build: `.\gradlew.bat build`
-- Package addon jar for a server output dir: `.\gradlew.bat addonJar -PoutDir="<path>"`
-- Check session memories from the project root: `serena memories check`
-- Windows paths are backslash-based; repo root is `D:\quent\Bureau\Atea\Source\PlagueAndPain`.

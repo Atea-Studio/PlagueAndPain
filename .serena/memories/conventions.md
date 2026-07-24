@@ -1,5 +1,0 @@
-- Addon wiring is stage-based: `@Init(stage = InitStage.PRE_PACK)` for registries/assets, `POST_PACK_PRE_WORLD` for command/lifecycle registration, `POST_WORLD` for listeners.
-- Keep domain code small and explicit; prefer typed config wrappers in `config/` over ad-hoc lookups.
-- Condition data lives in persistent data containers with `PlayerConditionManager`; helpers should reuse `DiseaseManager` / `InjuryManager` rather than re-implementing state checks.
-- UI text is Adventure `Component`-based; inventory GUIs should cancel click/drag events and use Nova gui textures when the screen needs a custom background.
-- Match existing naming: PascalCase singleton objects/classes, UPPER_SNAKE_CASE constants and enum entries, lowerCamelCase functions/properties.
