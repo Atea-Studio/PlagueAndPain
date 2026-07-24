@@ -1,6 +1,6 @@
 # Plague & Pain
 
-Disease and injury addon for **Nova** with progressive conditions, treatment items, guide/status GUIs, and transmissible blood samples.
+Disease and injury addon for **Nova** with progressive diseases and injuries, treatment items, guide/status GUIs, and transmissible blood samples.
 
 ## Features
 
@@ -65,7 +65,7 @@ If the blood syringe contains disease data, it attempts to infect the target.
 
 ## Configuration
 
-Config files are under `src/main/resources/configs/`.
+Config files are under `plugins/PlagueAndPain/configs/`.
 
 Global:
 - `config.yml`
@@ -82,13 +82,3 @@ Per-condition:
 - `rabies.yml`
 - `broken_leg.yml`
 - `open_wound.yml`
-
-Progression defaults are tuned to be slower than before.
-
-## Build
-
-From repository root:
-
-```bash
-./gradlew build
-```
