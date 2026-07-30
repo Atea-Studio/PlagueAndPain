@@ -6,6 +6,7 @@ import fr.ateastudio.plagueandpain.service.ConditionService
 import fr.ateastudio.plagueandpain.util.DiseaseManager
 import fr.ateastudio.plagueandpain.util.InjuryManager
 import net.kyori.adventure.text.Component
+import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.entity.Zombie
@@ -42,6 +43,10 @@ object DiseaseListener : Listener {
     private fun onConsume(event: PlayerItemConsumeEvent) {
         if (event.item.novaItem == Items.MEDICINE) {
             ConditionService.useMedicine(event.player)
+            return
+        }
+        
+        if (event.player.gameMode == GameMode.SPECTATOR || event.player.gameMode == GameMode.CREATIVE) {
             return
         }
         
@@ -100,6 +105,9 @@ object DiseaseListener : Listener {
         val acted = if (event.player.isSneaking) {
             handleSyringeUse(event.player, event.player)
         } else {
+            if (target.gameMode == GameMode.SPECTATOR || target.gameMode == GameMode.CREATIVE) {
+                return
+            }
             handleSyringeUse(event.player, target)
         }
         if (acted) {

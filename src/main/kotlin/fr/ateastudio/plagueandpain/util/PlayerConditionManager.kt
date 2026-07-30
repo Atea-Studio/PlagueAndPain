@@ -1,5 +1,6 @@
 package fr.ateastudio.plagueandpain.util
 
+import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.persistence.PersistentDataType
 import xyz.xenondevs.nova.addon.Addon
@@ -43,7 +44,7 @@ abstract class PlayerConditionManager<T>(
     }
     
     fun canAcquire(player: Player): Boolean {
-        return !hasCondition(player) && !hasArmorImmunity(player)
+        return !hasCondition(player) && !hasArmorImmunity(player) && (player.gameMode == GameMode.SURVIVAL || player.gameMode == GameMode.ADVENTURE)
     }
     
     fun setProgress(player: Player, progress: Double): Double {
