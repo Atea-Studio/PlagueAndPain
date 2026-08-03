@@ -1,4 +1,5 @@
 progress_per_tick: 0.02
+heat_progress_multiplier: 0.5
 slowness_amplifier: 1
 weakness_amplifier: 1
 damage_interval_ticks: 100

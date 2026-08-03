@@ -12,6 +12,7 @@ object CoughConfig {
     private val slownessAmplifierEntry = config.entry<Int>("slowness_amplifier")
     private val pneumoniaThresholdEntry = config.entry<Double>("pneumonia_threshold")
     private val pneumoniaStartingProgressEntry = config.entry<Double>("pneumonia_starting_progress")
+    private val heatProgressMultiplierEntry = config.entry<Double>("heat_progress_multiplier")
     
     val progressPerTick: Double
         get() = progressPerTickEntry.get()
@@ -33,4 +34,7 @@ object CoughConfig {
     
     val pneumoniaStartingProgress: Double
         get() = pneumoniaStartingProgressEntry.get()
+    
+    val heatProgressMultiplier: Double
+        get() = heatProgressMultiplierEntry.get()
 }

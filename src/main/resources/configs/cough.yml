@@ -1,4 +1,5 @@
 progress_per_tick: 0.01
+heat_progress_multiplier: 0.5
 exposure_check_interval_ticks: 200
 rain_exposure_chance: 4.0
 water_exposure_chance: 8.0

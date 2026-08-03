@@ -401,6 +401,7 @@ internal class ConditionGuideGui(private val player: Player) {
                 )
                 lines += tc("menu.plagueandpain.guide.cough.progression.l3", NamedTextColor.GRAY, Component.text(CoughConfig.waterExposureChance.toString()))
                 lines += tc("menu.plagueandpain.guide.cough.progression.l4", NamedTextColor.YELLOW, Component.text(CoughConfig.pneumoniaThreshold.toString()))
+                lines += tc("menu.plagueandpain.guide.cough.progression.l5", NamedTextColor.GREEN, Component.text((CoughConfig.heatProgressMultiplier * 100).toInt().toString()))
             }
             GuideCondition.FEVER -> {
                 lines += tc("menu.plagueandpain.guide.fever.progression.l1", NamedTextColor.GRAY, Component.text(FeverConfig.progressPerTick.toString()))
@@ -421,6 +422,7 @@ internal class ConditionGuideGui(private val player: Player) {
                 lines += tc("menu.plagueandpain.guide.pneumonia.progression.l1", NamedTextColor.GRAY, Component.text(PneumoniaConfig.progressPerTick.toString()))
                 lines += tc("menu.plagueandpain.guide.pneumonia.progression.l2", NamedTextColor.GRAY)
                 lines += tc("menu.plagueandpain.guide.pneumonia.progression.l3", NamedTextColor.YELLOW)
+                lines += tc("menu.plagueandpain.guide.pneumonia.progression.l4", NamedTextColor.GREEN, Component.text((PneumoniaConfig.heatProgressMultiplier * 100).toInt().toString()))
             }
             GuideCondition.RABIES -> {
                 lines += tc("menu.plagueandpain.guide.rabies.progression.l1", NamedTextColor.GRAY, Component.text(RabiesConfig.progressPerTick.toString()))
@@ -457,7 +459,8 @@ internal class ConditionGuideGui(private val player: Player) {
         return when (condition) {
             GuideCondition.COUGH -> listOf(
                 tc("menu.plagueandpain.guide.cough.source.l1", NamedTextColor.GRAY),
-                tc("menu.plagueandpain.guide.cough.source.l2", NamedTextColor.YELLOW)
+                tc("menu.plagueandpain.guide.cough.source.l2", NamedTextColor.YELLOW),
+                tc("menu.plagueandpain.guide.cough.source.l3", NamedTextColor.GREEN)
             )
             GuideCondition.FEVER -> listOf(
                 tc("menu.plagueandpain.guide.fever.source.l1", NamedTextColor.GRAY),
