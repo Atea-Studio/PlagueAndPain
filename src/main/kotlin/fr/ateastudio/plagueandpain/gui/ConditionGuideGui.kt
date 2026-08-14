@@ -220,13 +220,10 @@ internal class ConditionGuideGui(private val player: Player) {
     private fun currentDiseaseButton(): AbstractItem {
         return object : AbstractItem() {
             override fun getItemProvider(player: Player): ItemProvider {
-                val disease = DiseaseManager.getType(player)
-                if (disease == null) {
-                    return ItemBuilder(ItemUtils.getItemStack(Items.CHECK_COLOR.id.toString()))
-                        .setName(tc("menu.plagueandpain.status.disease.none.title", NamedTextColor.GREEN))
-                        .addLoreLines(tc("menu.plagueandpain.status.disease.none.l1", NamedTextColor.GRAY))
-                        .clearModifiers()
-                }
+                val disease = DiseaseManager.getType(player) ?: return ItemBuilder(ItemUtils.getItemStack(Items.CHECK_COLOR.id.toString()))
+                    .setName(tc("menu.plagueandpain.status.disease.none.title", NamedTextColor.GREEN))
+                    .addLoreLines(tc("menu.plagueandpain.status.disease.none.l1", NamedTextColor.GRAY))
+                    .clearModifiers()
                 
                 val progress = DiseaseManager.getProgress(player)
                 val mapped = fromDisease(disease)
@@ -255,13 +252,10 @@ internal class ConditionGuideGui(private val player: Player) {
     private fun currentInjuryButton(): AbstractItem {
         return object : AbstractItem() {
             override fun getItemProvider(player: Player): ItemProvider {
-                val injury = InjuryManager.getType(player)
-                if (injury == null) {
-                    return ItemBuilder(ItemUtils.getItemStack(Items.CHECK_COLOR.id.toString()))
-                        .setName(tc("menu.plagueandpain.status.injury.none.title", NamedTextColor.GREEN))
-                        .addLoreLines(tc("menu.plagueandpain.status.injury.none.l1", NamedTextColor.GRAY))
-                        .clearModifiers()
-                }
+                val injury = InjuryManager.getType(player) ?: return ItemBuilder(ItemUtils.getItemStack(Items.CHECK_COLOR.id.toString()))
+                    .setName(tc("menu.plagueandpain.status.injury.none.title", NamedTextColor.GREEN))
+                    .addLoreLines(tc("menu.plagueandpain.status.injury.none.l1", NamedTextColor.GRAY))
+                    .clearModifiers()
                 
                 val progress = InjuryManager.getProgress(player)
                 val mapped = fromInjury(injury)
