@@ -12,6 +12,7 @@ import fr.ateastudio.plagueandpain.config.PneumoniaConfig
 import fr.ateastudio.plagueandpain.config.RabiesConfig
 import fr.ateastudio.plagueandpain.registry.GuiTextures
 import fr.ateastudio.plagueandpain.registry.Items
+import fr.ateastudio.plagueandpain.registry.Items.QUESTION_COLOR
 import fr.ateastudio.plagueandpain.util.ConditionSeverity
 import fr.ateastudio.plagueandpain.util.DiseaseManager
 import fr.ateastudio.plagueandpain.util.InjuryManager
@@ -74,7 +75,7 @@ internal class ConditionGuideGui(private val player: Player) {
             .addIngredient('G', navGuideButton(true))
             .addIngredient('X', navExitButton())
             .addIngredient('O', staticItem(
-                Material.BOOK,
+                QUESTION_COLOR.createItemStack(),
                 tc("menu.plagueandpain.guide.info.title", NamedTextColor.WHITE),
                 listOf(
                     tc("menu.plagueandpain.guide.info.l1", NamedTextColor.GRAY),
@@ -133,7 +134,7 @@ internal class ConditionGuideGui(private val player: Player) {
                 )
             ))
             .addIngredient('p', staticItem(
-                Material.BOOK,
+                QUESTION_COLOR.createItemStack(),
                 tc("menu.plagueandpain.guide.detail.progression.title", NamedTextColor.WHITE),
                 progressionLore(condition)
             ))
@@ -185,7 +186,7 @@ internal class ConditionGuideGui(private val player: Player) {
     private fun navExitButton(): AbstractItem {
         return object : AbstractItem() {
             override fun getItemProvider(player: Player): ItemProvider {
-                return ItemBuilder(ItemUtils.getItemStack(Items.EXIT.id.toString()))
+                return ItemBuilder(ItemUtils.getItemStack(Items.CLOSE_COLOR.id.toString()))
                     .setName(tc("menu.plagueandpain.nav.exit.title", NamedTextColor.RED))
                     .addLoreLines(tc("menu.plagueandpain.nav.exit.l1", NamedTextColor.GRAY))
                     .clearModifiers()
@@ -221,7 +222,7 @@ internal class ConditionGuideGui(private val player: Player) {
             override fun getItemProvider(player: Player): ItemProvider {
                 val disease = DiseaseManager.getType(player)
                 if (disease == null) {
-                    return ItemBuilder(ItemUtils.getItemStack(Items.OK.id.toString()))
+                    return ItemBuilder(ItemUtils.getItemStack(Items.CHECK_COLOR.id.toString()))
                         .setName(tc("menu.plagueandpain.status.disease.none.title", NamedTextColor.GREEN))
                         .addLoreLines(tc("menu.plagueandpain.status.disease.none.l1", NamedTextColor.GRAY))
                         .clearModifiers()
@@ -256,7 +257,7 @@ internal class ConditionGuideGui(private val player: Player) {
             override fun getItemProvider(player: Player): ItemProvider {
                 val injury = InjuryManager.getType(player)
                 if (injury == null) {
-                    return ItemBuilder(ItemUtils.getItemStack(Items.OK.id.toString()))
+                    return ItemBuilder(ItemUtils.getItemStack(Items.CHECK_COLOR.id.toString()))
                         .setName(tc("menu.plagueandpain.status.injury.none.title", NamedTextColor.GREEN))
                         .addLoreLines(tc("menu.plagueandpain.status.injury.none.l1", NamedTextColor.GRAY))
                         .clearModifiers()
@@ -318,7 +319,7 @@ internal class ConditionGuideGui(private val player: Player) {
         }
     }
 
-    private fun staticItem(material: Material, name: Component, lore: List<Component>): ItemStack {
+    private fun staticItem(@Suppress("SameParameterValue") material: Material, name: Component, lore: List<Component>): ItemStack {
         return ItemBuilder(material)
             .setName(name)
             .addLoreLines(lore)
