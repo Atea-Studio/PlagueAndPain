@@ -1,5 +1,5 @@
 group = "fr.ateastudio.plagueandpain"
-version = "1.1.0"
+version = "1.2.0"
 
 plugins {
     alias(libs.plugins.kotlin)

@@ -19,6 +19,7 @@ import kotlin.random.Random
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Location
+import org.bukkit.Material
 import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
@@ -193,6 +194,9 @@ object ConditionService {
         if (player.ticksLived % CoughConfig.exposureCheckIntervalTicks != 0) {
             return
         }
+        if (isNearHeat(player)) {
+            return
+        }
         
         val chance = when {
             player.location.block.isLiquid -> CoughConfig.waterExposureChance
@@ -242,10 +246,11 @@ object ConditionService {
     
     private fun tickDisease(player: Player) {
         val disease = DiseaseManager.getType(player) ?: return
+        val nearHeat = isNearHeat(player)
         val progress = when (disease) {
-            Disease.COUGH -> DiseaseManager.addProgress(player, CoughConfig.progressPerTick)
+            Disease.COUGH -> DiseaseManager.addProgress(player, CoughConfig.progressPerTick * if (nearHeat) CoughConfig.heatProgressMultiplier else 1.0)
             Disease.FEVER -> DiseaseManager.addProgress(player, FeverConfig.progressPerTick)
-            Disease.PNEUMONIA -> DiseaseManager.addProgress(player, PneumoniaConfig.progressPerTick)
+            Disease.PNEUMONIA -> DiseaseManager.addProgress(player, PneumoniaConfig.progressPerTick * if (nearHeat) PneumoniaConfig.heatProgressMultiplier else 1.0)
             Disease.PLAGUE -> DiseaseManager.addProgress(player, PlagueConfig.progressPerTick)
             Disease.RABIES -> DiseaseManager.addProgress(player, RabiesConfig.progressPerTick)
         }
@@ -349,6 +354,22 @@ object ConditionService {
         }
         
         return world.getHighestBlockYAt(location) <= location.blockY
+    }
+    
+    private fun isNearHeat(player: Player): Boolean {
+        if (player.fireTicks > 0) return true
+        val loc = player.location
+        val heatMaterials = setOf(Material.LAVA, Material.FIRE, Material.SOUL_FIRE)
+        for (dx in -2..2) {
+            for (dy in -1..1) {
+                for (dz in -2..2) {
+                    if (loc.clone().add(dx.toDouble(), dy.toDouble(), dz.toDouble()).block.type in heatMaterials) {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
     }
     
     private fun roll(chance: Double): Boolean {

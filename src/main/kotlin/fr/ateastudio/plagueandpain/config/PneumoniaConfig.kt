@@ -10,6 +10,7 @@ object PneumoniaConfig {
     private val weaknessAmplifierEntry = config.entry<Int>("weakness_amplifier")
     private val damageIntervalEntry = config.entry<Int>("damage_interval_ticks")
     private val damagePerPulseEntry = config.entry<Double>("damage_per_pulse")
+    private val heatProgressMultiplierEntry = config.entry<Double>("heat_progress_multiplier")
     
     val progressPerTick: Double
         get() = progressPerTickEntry.get()
@@ -25,4 +26,7 @@ object PneumoniaConfig {
     
     val damagePerPulse: Double
         get() = damagePerPulseEntry.get()
+    
+    val heatProgressMultiplier: Double
+        get() = heatProgressMultiplierEntry.get()
 }
