@@ -1,3 +1,4 @@
+grace_period_minutes: 60
 injury:
   bandage_relief: 35.0
 
@@ -8,4 +9,4 @@ disease:
     - minecraft:copper_leggings
     - minecraft:copper_boots
   medicine_relief: 55.0
-  immunity_chance_reduction_per_heal: 5.0
+  immunity_chance_reduction_per_heal: 2.0
