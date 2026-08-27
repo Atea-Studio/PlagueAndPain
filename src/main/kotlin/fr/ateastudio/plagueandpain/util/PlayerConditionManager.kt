@@ -1,6 +1,8 @@
 package fr.ateastudio.plagueandpain.util
 
+import fr.ateastudio.plagueandpain.config.AddonConfig
 import org.bukkit.GameMode
+import org.bukkit.Statistic
 import org.bukkit.entity.Player
 import org.bukkit.persistence.PersistentDataType
 import xyz.xenondevs.nova.addon.Addon
@@ -8,6 +10,7 @@ import xyz.xenondevs.nova.config.Configs
 import xyz.xenondevs.nova.config.optionalEntry
 import xyz.xenondevs.nova.util.NamespacedKey
 import xyz.xenondevs.nova.util.item.ItemUtils
+import kotlin.random.Random
 
 interface TaggedCondition {
     val tag: String
@@ -43,8 +46,38 @@ abstract class PlayerConditionManager<T>(
         return getType(player) != null
     }
     
+    fun hasGracePeriod(player: Player): Boolean {
+        val maxGracePeriodTicks = AddonConfig.gracePeriodMinutes * 1200.0
+        val playtimeTicks = player.getStatistic(Statistic.PLAY_ONE_MINUTE).toDouble()
+        
+        // 1. If they have exceeded the max time, they are fully vulnerable.
+        if (playtimeTicks >= maxGracePeriodTicks) {
+            return false
+        }
+        
+        // 2. Absolute immunity for the first 25% of their grace period.
+        // If they have played less than 7.5 minutes (out of 30), guarantee protection.
+        val safeZoneTicks = maxGracePeriodTicks * 0.25
+        if (playtimeTicks <= safeZoneTicks) {
+            return true
+        }
+        
+        // 3. The True Scaling Vulnerability
+        // Calculates how far along they are strictly within the fading window
+        val fadingDurationTicks = maxGracePeriodTicks * 0.75
+        val timeInFadingZone = playtimeTicks - safeZoneTicks
+        
+        // This creates a clean 0.0 to 1.0 fraction during the final 75% of their grace period
+        val vulnerabilityChance = timeInFadingZone / fadingDurationTicks
+        
+        // If our random roll is GREATER than their vulnerability chance, the grace period holds!
+        // Example at 15 mins (50%): Random(0.7) > 0.5 = True (Protected!)
+        // Example at 29 mins (96%): Random(0.2) > 0.96 = False (Infected!)
+        return Random.nextDouble() > vulnerabilityChance
+    }
+    
     fun canAcquire(player: Player): Boolean {
-        return !hasCondition(player) && !hasArmorImmunity(player) && (player.gameMode == GameMode.SURVIVAL || player.gameMode == GameMode.ADVENTURE)
+        return !hasGracePeriod(player) && !hasCondition(player) && !hasArmorImmunity(player) && (player.gameMode == GameMode.SURVIVAL || player.gameMode == GameMode.ADVENTURE)
     }
     
     fun setProgress(player: Player, progress: Double): Double {
